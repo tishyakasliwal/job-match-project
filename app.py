@@ -4,13 +4,13 @@ from src.normalize import fetch_jobs_from_url, dedupe_jobs
 from src.index_store import build_index
 from src.match_agent import rank_jobs
 
-st.set_page_config(page_title="Job Match Agent", layout="wide")
-st.title("Job Postings RAG + Match Agent (ATS Board URLs)")
+st.set_page_config(page_title="AI-Powered Job Finder", layout="wide")
+st.title("Job Postings RAG (ATS Board URLs)")
 
 with st.sidebar:
     st.header("Inputs")
     board_urls = st.text_area(
-        "Paste ATS board URLs (one per line)",
+        "Paste Lever board URLs (one per line)",
         value="https://api.lever.co/v0/postings/whoop"
     )
     preferences = st.text_area(
@@ -41,7 +41,7 @@ with col1:
                 st.warning(f"Failed to fetch {u}: {e}")
         all_jobs = dedupe_jobs(all_jobs)
         st.session_state.jobs = all_jobs
-        st.success(f"Fetched {len(all_jobs)} job postings.")
+        st.success(f"Fetched {len(all_jobs)} job postings posted in the last 10 days.")
     st.subheader("Fetched jobs preview")
     for j in st.session_state.jobs[:10]:
         st.write(f"**{j.company} — {j.title}**")

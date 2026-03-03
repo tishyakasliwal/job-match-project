@@ -40,7 +40,7 @@ def _extract_details(item: dict) -> str:
     return "\n\n".join(sections)
 
 def fetch_lever(board_url: str) -> List[JobPosting]:
-    # board_url can be: https://jobs.lever.co/<company> or https://api.lever.co/v0/postings/<company>
+    # board_url can be: https://api.lever.co/v0/postings/<company>
     # Extract company name and use API endpoint
     company = board_url.rstrip("/").split("/")[-1]
     api_url = f"https://api.lever.co/v0/postings/{company}"
@@ -56,9 +56,6 @@ def fetch_lever(board_url: str) -> List[JobPosting]:
         location = categories.get("location") or item.get("categories", {}).get("location")
 
         desc = item.get("descriptionPlain") or item.get("description") or ""
-        if not desc:
-            # sometimes description is HTML under "description"
-            desc = item.get("description", "")
 
         # NEW: extract details from lists
         details = _extract_details(item)
@@ -69,7 +66,7 @@ def fetch_lever(board_url: str) -> List[JobPosting]:
         if created_ms:
             posted_date_obj = datetime.fromtimestamp(created_ms / 1000)
             posted_date = posted_date_obj.strftime("%Y-%m-%d")
-            # Check if posted date is more than 10 old
+            # Check if posted date is more than 10 daysold
             days_old = (datetime.now() - posted_date_obj).days
             if days_old > 10:
                 continue # skip old postings

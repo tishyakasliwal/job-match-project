@@ -1,4 +1,4 @@
-# Job Match Agent
+# Job Fit Scorer
 
 An AI-powered job matching system that uses RAG (Retrieval-Augmented Generation) and semantic search to match job postings to candidates.
 
@@ -21,7 +21,7 @@ app.py                          # Streamlit UI
 │   ├── match_agent.py         # LLM ranking agent (GPT-4o-mini)
 │   └── fetchers/
 │       ├── lever.py           # Lever API integration
-│       ├── greenhouse.py      # Greenhouse API integration (stub)
+│       ├── greenhouse.py      # Greenhouse API integration 
 │       └── test.py            # Test utilities
 ```
 
@@ -62,10 +62,9 @@ Visit `http://localhost:8501`
 
 ### Step 1: Fetch Jobs
 1. Paste ATS board URLs (one per line):
-   - `https://jobs.lever.co/<company>` (Lever)
    - `https://api.lever.co/v0/postings/<company>` (Lever API)
 2. Click **"1) Fetch Jobs"**
-3. Preview fetched postings
+3. Preview fetched postings (note: currently only fetches jobs posted in the last 10 days)
 
 ### Step 2: Build Index
 - Click **"2) Build Index"** to create semantic search index
